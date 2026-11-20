@@ -1,77 +1,115 @@
 # Alamir Tech — System Architecture & Implementation
 
-## 1. Overview
-The **Alamir Tech** website is built as an enterprise-grade web application using the modern **Next.js 16 App Router**, **React 19**, **TypeScript**, and **Tailwind CSS v4**.
+## 1. Architectural Philosophy
+The **Alamir Tech** website is built using **Clean Architecture principles**:
+- **Separation of Concerns**: Presentation, Domain Data, Visual Assets, and UI Primitives are strictly separated into discrete layers.
+- **Type-Safety**: 100% typed with TypeScript (`strict: true`), zero type errors.
+- **Decoupled Data**: All business copy, services, products, FAQs, navigation, and contact info are declared in type-safe modules under `lib/`.
+- **Zero External UI Bloat**: Dependency-free, optimized SVG vector graphics and icons—lightning-fast load times with zero bundle overhead.
 
 ---
 
-## 2. Project Directory Structure
+## 2. Directory Structure
 ```
 alamir-tech/
 ├── app/
 │   ├── favicon.ico
-│   ├── globals.css          # Tailwind CSS v4 @theme tokens & brand variables
-│   ├── layout.tsx           # Root metadata, SEO tags, responsive layout wrapper
-│   └── page.tsx             # Main landing page assembling all components
+│   ├── globals.css                       # Tailwind CSS v4 design tokens & theme
+│   ├── layout.tsx                        # Root layout, brand SEO metadata, favicon
+│   ├── not-found.tsx                     # Branded 404 page
+│   └── page.tsx                          # Composite landing page
 ├── components/
-│   ├── About.tsx            # Company story, values, and engineering scale
-│   ├── Button.tsx           # Reusable brand button matching Button.png
-│   ├── CaseStudies.tsx      # Real-world client outcomes & architecture metrics
-│   ├── ContactSection.tsx   # Interactive consultation form & global office info
-│   ├── Footer.tsx           # Dark navy footer with white logo & navigation
-│   ├── Hero.tsx             # Impactful hero with brand slogan & live tech card
-│   ├── icons.tsx            # Dependency-free, optimized SVG icons library
-│   ├── Navbar.tsx           # Sticky navigation with dynamic logo switching
-│   ├── Services.tsx         # 6 Core enterprise engineering services with tabs
-│   ├── Solutions.tsx        # Tailored industry vertical blueprints
-│   ├── TechStack.tsx        # Modern tech radar grid (Frontend, Cloud, AI, Data)
-│   ├── Testimonials.tsx     # Executive client endorsements
-│   └── WhyUs.tsx            # Value propositions and zero-trust engineering
+│   ├── graphics/                         # Custom SVG vector illustrations
+│   │   ├── CeoAvatar.tsx                 # Executive founder portrait
+│   │   ├── RocketIllustration.tsx        # 3D rocket blasting off
+│   │   ├── TeamIllustration.tsx          # Agile engineering team collaboration
+│   │   └── WorldMap.tsx                  # Interactive world map with radar pins
+│   ├── icons/
+│   │   └── index.tsx                     # Typed, tree-shakeable SVG icons
+│   ├── layout/                           # Global structural layouts
+│   │   ├── Footer.tsx                    # Deep navy footer with white logo & links
+│   │   └── Navbar.tsx                    # Sticky header with logo & CTA button
+│   ├── sections/                         # Feature sections matching UI mockup
+│   │   ├── ChallengesSolutionsSection.tsx# Philosophy + Understand/Connect/Scale
+│   │   ├── ConnectedTeamSection.tsx      # World Map + Leadership + Global stats
+│   │   ├── ContactEnquirySection.tsx     # Direct channels + Enquiry form
+│   │   ├── FAQSection.tsx                # Accordion FAQ
+│   │   ├── HeroSection.tsx               # Hero ("Run your business with greater clarity")
+│   │   ├── PowerfulSoftwareSection.tsx   # Solutions & Products (ERP, CRM, Finance)
+│   │   ├── RocketCTASection.tsx          # High-conversion 3D rocket CTA banner
+│   │   └── TechSolutionsSection.tsx      # "Technology Solutions That Move Your Business Forward"
+│   └── ui/                               # Atomic design primitives
+│       ├── Accordion.tsx                 # Accessible animated accordion
+│       ├── Badge.tsx                     # Pill badges (cyan, pink, purple, blue)
+│       └── Button.tsx                    # Brand pink CTA button matching Button.png
 ├── docs/
-│   ├── ARCHITECTURE.md      # This architectural specification
-│   └── BRAND_GUIDELINES.md  # Brand design system & color tokens
+│   ├── ARCHITECTURE.md                   # This architectural specification
+│   └── BRAND_GUIDELINES.md               # Brand design system & color tokens
+├── lib/                                  # Domain logic & content configuration
+│   ├── faq-data.ts                       # FAQ data models & questions
+│   ├── services-data.ts                  # Services, products, and metrics data
+│   └── site-config.ts                    # Global contact, navigation & metadata
 └── public/
     └── images/
-        ├── ALAMIR TECH LOGO 3.png      # Original brand logo asset
-        ├── Brand Guidelines.png        # Original brand guide reference
-        ├── Button.png                  # Original button specification
-        ├── logo-color-trimmed.png      # Cropped color logo for light backgrounds
-        └── logo-white-trimmed.png      # Cropped white logo for dark navy backgrounds
+        ├── ALAMIR TECH LOGO 3.png       # Original source logo
+        ├── Brand Guidelines.png         # Original brand guidelines
+        ├── Button.png                   # Original button specification
+        ├── logo-color-trimmed.png       # Trimmed color logo for light headers
+        └── logo-white-trimmed.png       # Trimmed white logo for dark navy footers
 ```
 
 ---
 
-## 3. Key Design & Implementation Decisions
+## 3. UI Section Mapping (Matching Design Mockup)
 
-### 3.1 Tailwind CSS v4 Theme Integration
-The brand tokens are declared natively inside `app/globals.css` using the `@theme` directive:
-```css
-@theme {
-  --color-brand-navy: #091361;
-  --color-brand-blue: #091FA8;
-  --color-brand-cyan: #0599D6;
-  --color-brand-pink: #E60085;
-  --color-brand-pink-hover: #c90074;
-  --color-brand-purple: #730D85;
-  --color-brand-dark: #0E1733;
-  --color-brand-muted: #5C6985;
-  --color-brand-light: #F5F7FC;
-  --color-brand-border: #E0E5EF;
-  --color-brand-white: #FFFFFF;
-}
-```
-
-### 3.2 Dynamic Header Logo Switching
-The `Navbar` component automatically tracks scroll position (`isScrolled`):
-- **Hero view (unscrolled)**: Displays the **white logo** (`logo-white-trimmed.png`) over the transparent Deep Navy hero.
-- **Scrolled view**: Switches smoothly to a solid white backdrop with blur (`backdrop-blur-md`) and displays the **color logo** (`logo-color-trimmed.png`).
-
-### 3.3 Zero External Icon Dependency
-All icons are encapsulated in `components/icons.tsx` as lightweight, pixel-perfect SVGs. This eliminates external npm icon packages, prevents version conflicts with React 19, and guarantees 0ms icon load time.
+1. **Header & Navigation (`Navbar.tsx`)**:
+   - Color logo on light background.
+   - Links: Home, About, Services, Products, Our Team, Contact.
+   - Action: Pink pill button "Let's Talk".
+2. **Hero Section (`HeroSection.tsx`)**:
+   - Headline: *"Run your business with greater clarity."*
+   - Subtitle: Enterprise custom software & cloud architecture.
+   - Actions: "Start a Project Today" + "See how we work".
+   - 4 Metric Badges: 4.9/5 Rating, 99.9% Uptime, 100% Security, 4.2x Faster.
+3. **Services (`TechSolutionsSection.tsx`)**:
+   - Headline: *"Technology Solutions That Move Your Business Forward"*
+   - 3 Feature Cards: Custom Software Development, Cloud Infrastructure & DevOps, Data Engineering & AI Systems.
+4. **Products (`PowerfulSoftwareSection.tsx`)**:
+   - Headline: *"Powerful Software for Every Business Need"*
+   - 3 Product Cards: ERP & Operations Platform, Enterprise CRM & Sales Suite, Automated Financial Management.
+5. **Team & Philosophy (`ChallengesSolutionsSection.tsx`)**:
+   - Headline: *"We turn business challenges into practical software solutions."*
+   - Cross-functional team visual + 3 Pillars (Continuous Consultation, Robust Architecture, Transparent Delivery).
+   - 3 Bottom Process Cards: Understand (Pink), Connect (Cyan), Scale (Purple).
+6. **Global Presence & Leadership (`ConnectedTeamSection.tsx`)**:
+   - Headline: *"A connected team, building smarter solutions."*
+   - Interactive World Map with animated glowing radar pins (San Francisco, London, Riyadh, Dubai, Singapore).
+   - Executive Leadership card: Amir Farooq, Founder & CEO.
+   - Global stats bar: 100+ Enterprise Clients, 14+ Global Hubs, 250+ Delivered Apps, 99.9% Uptime SLA, 4.8/5 Satisfaction.
+7. **Contact & Project Enquiry (`ContactEnquirySection.tsx`)**:
+   - Headline: *"Let's build something that works for your business."*
+   - Direct Channels: WhatsApp, Phone, Email, Location + 24/7 Urgent Support hotline.
+   - Interactive Enquiry Form: Full Name, Company, Phone, Service, Budget, Project Details.
+8. **FAQ (`FAQSection.tsx`)**:
+   - Headline: *"Question, answered"*
+   - Interactive Accordion with smooth toggle and animated chevrons.
+9. **Rocket CTA (`RocketCTASection.tsx`)**:
+   - Headline: *"Ready to make your business work smarter?"*
+   - High-fidelity 3D Rocket vector with thruster exhaust.
+   - Action: "Start your project today".
+10. **Footer (`Footer.tsx`)**:
+    - Deep Navy footer with White Logo, Social Links, Pages, Solutions, Contact info, and Copyright.
 
 ---
 
 ## 4. Build & Development Commands
-- **Development Server**: `npm run dev` (starts on `http://localhost:3000`)
-- **Production Build**: `npm run build` (compiles TypeScript and generates static output)
-- **Production Server**: `npm run start`
+```bash
+# Start development server
+npm run dev
+
+# Compile TypeScript and build for production
+npm run build
+
+# Start production server
+npm run start
+```
