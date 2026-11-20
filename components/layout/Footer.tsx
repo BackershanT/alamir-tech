@@ -10,14 +10,13 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
           {/* Brand Info */}
           <div className="lg:col-span-2 space-y-5">
-            <div className="relative h-11 w-[180px]">
-              <Image
-                src="/images/logo-white-trimmed.png"
-                alt="Alamir Tech"
-                fill
-                className="object-contain object-left"
-              />
-            </div>
+            <Image
+              src="/images/logo-white-trimmed.png"
+              alt="Alamir Tech"
+              width={190}
+              height={51}
+              className="h-10 sm:h-11 w-auto object-contain object-left"
+            />
             <p className="text-sm text-brand-border/80 max-w-sm leading-relaxed">
               Technology solutions that move your business forward. We engineer scalable enterprise software, intelligent automation, and cloud platforms.
             </p>

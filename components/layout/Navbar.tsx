@@ -16,15 +16,14 @@ export function Navbar() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="relative h-10 w-[170px] sm:h-11 sm:w-[190px]">
-              <Image
-                src="/images/logo-color-trimmed.png"
-                alt="Alamir Tech"
-                fill
-                priority
-                className="object-contain object-left"
-              />
-            </div>
+            <Image
+              src="/images/logo-color-trimmed.png"
+              alt="Alamir Tech"
+              width={190}
+              height={51}
+              priority
+              className="h-10 sm:h-11 w-auto object-contain object-left"
+            />
           </Link>
 
           {/* Desktop Navigation Links */}
