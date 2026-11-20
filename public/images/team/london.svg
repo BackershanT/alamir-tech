@@ -1,0 +1,22 @@
+<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgL" x1="0" y1="0" x2="100" y2="100">
+      <stop stop-color="#1e1b4b"/>
+      <stop offset="1" stop-color="#312e81"/>
+    </linearGradient>
+    <linearGradient id="skinL" x1="35" y1="25" x2="65" y2="65">
+      <stop stop-color="#fed7aa"/>
+      <stop offset="1" stop-color="#fba872"/>
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="50" fill="url(#bgL)"/>
+  <path d="M25 40 C25 22 75 22 75 40 C75 62 70 75 68 80 L32 80 C30 75 25 62 25 40 Z" fill="#7c2d12"/>
+  <rect x="45" y="55" width="10" height="15" fill="#fba872" rx="3"/>
+  <ellipse cx="50" cy="43" rx="16" ry="19" fill="url(#skinL)"/>
+  <path d="M28 36 C34 22 66 22 72 36 C68 28 58 24 50 24 C42 24 32 28 28 36 Z" fill="#9a3412"/>
+  <rect x="36" y="38" width="11" height="8" rx="2" stroke="#E60085" stroke-width="1.5" fill="none"/>
+  <rect x="53" y="38" width="11" height="8" rx="2" stroke="#E60085" stroke-width="1.5" fill="none"/>
+  <line x1="47" y1="42" x2="53" y2="42" stroke="#E60085" stroke-width="1.5"/>
+  <path d="M20 100 C20 78 34 70 43 70 L57 70 C66 70 80 78 80 100 Z" fill="#4c1d95"/>
+  <path d="M43 70 L50 86 L57 70 Z" fill="#ffffff"/>
+</svg>

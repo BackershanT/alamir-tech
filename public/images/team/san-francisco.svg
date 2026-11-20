@@ -1,0 +1,19 @@
+<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgSF" x1="0" y1="0" x2="100" y2="100">
+      <stop stop-color="#082f49"/>
+      <stop offset="1" stop-color="#0369a1"/>
+    </linearGradient>
+    <linearGradient id="skinSF" x1="35" y1="25" x2="65" y2="65">
+      <stop stop-color="#fcd34d"/>
+      <stop offset="1" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="50" fill="url(#bgSF)"/>
+  <rect x="44" y="55" width="12" height="16" fill="#f59e0b" rx="3"/>
+  <ellipse cx="50" cy="42" rx="17" ry="20" fill="url(#skinSF)"/>
+  <path d="M30 35 C32 18 68 18 70 35 C68 26 60 22 50 22 C40 22 32 26 30 35 Z" fill="#292524"/>
+  <path d="M38 48 C38 60 62 60 62 48 C62 57 56 61 50 61 C44 61 38 57 38 48 Z" fill="#292524" opacity="0.4"/>
+  <path d="M18 100 C18 78 32 68 42 68 L58 68 C68 68 82 78 82 100 Z" fill="#1e293b"/>
+  <path d="M42 68 C42 80 58 80 58 68 Z" fill="#0599D6"/>
+</svg>

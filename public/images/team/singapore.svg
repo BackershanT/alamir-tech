@@ -1,0 +1,21 @@
+<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgS" x1="0" y1="0" x2="100" y2="100">
+      <stop stop-color="#3b0764"/>
+      <stop offset="1" stop-color="#6b21a8"/>
+    </linearGradient>
+    <linearGradient id="skinS" x1="35" y1="25" x2="65" y2="65">
+      <stop stop-color="#fef08a"/>
+      <stop offset="1" stop-color="#fed7aa"/>
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="50" fill="url(#bgS)"/>
+  <path d="M26 36 C26 20 74 20 74 36 C74 58 72 70 70 72 L30 72 C28 70 26 58 26 36 Z" fill="#09090b"/>
+  <rect x="45" y="55" width="10" height="15" fill="#fed7aa" rx="3"/>
+  <ellipse cx="50" cy="43" rx="16" ry="19" fill="url(#skinS)"/>
+  <path d="M26 36 C32 24 68 24 74 36 C68 28 60 25 50 25 C40 25 32 28 26 36 Z" fill="#18181b"/>
+  <path d="M25 40 L30 65 L36 50 Z" fill="#18181b"/>
+  <path d="M75 40 L70 65 L64 50 Z" fill="#18181b"/>
+  <path d="M20 100 C20 78 34 70 43 70 L57 70 C66 70 80 78 80 100 Z" fill="#0f766e"/>
+  <path d="M43 70 L50 86 L57 70 Z" fill="#ffffff"/>
+</svg>
