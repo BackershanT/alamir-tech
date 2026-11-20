@@ -21,8 +21,9 @@ innerContent = innerContent.replace(/<desc>[\s\S]*?<\/desc>/gi, '');
 innerContent = innerContent.replace(/fill-rule/g, 'fillRule');
 innerContent = innerContent.replace(/clip-rule/g, 'clipRule');
 innerContent = innerContent.replace(/stroke-width/g, 'strokeWidth');
-// Replace class="whatever" with className="whatever"
-innerContent = innerContent.replace(/\bclass="([^"]*)"/g, 'className="$1"');
+// Strip any class or className attributes entirely from raw SVG paths
+innerContent = innerContent.replace(/\s*\bclass="[^"]*"/g, '');
+innerContent = innerContent.replace(/\s*\bclassName="[^"]*"/g, '');
 
 const header = `"use client";
 
