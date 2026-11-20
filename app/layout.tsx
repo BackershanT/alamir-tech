@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "./globals.compiled.css";
 
 export const metadata: Metadata = {
-  title: "Alamir Tech | Technology That Moves Business Forward",
+  title: "Alamir Tech | Technology Solutions That Move Your Business Forward",
   description:
-    "Alamir Tech delivers enterprise software engineering, cloud architecture, AI solutions, cybersecurity, and digital transformation services.",
+    "We architect custom software solutions, intelligent cloud platforms, and enterprise systems that drive measurable clarity, performance, and revenue growth.",
   keywords: [
     "Alamir Tech",
     "Enterprise Software",
-    "Cloud Architecture",
-    "AI Solutions",
-    "Digital Transformation",
-    "Cybersecurity",
-    "IT Consulting",
+    "Cloud Infrastructure",
+    "DevOps",
+    "AI Systems",
+    "ERP Platform",
+    "CRM Suite",
+    "Financial Management",
   ],
   icons: {
     icon: "/images/logo-color-trimmed.png",
@@ -26,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full antialiased scroll-smooth">
-      <body className="min-h-full flex flex-col bg-white text-brand-dark selection:bg-brand-pink/20 selection:text-brand-pink">
+      <body className="min-h-full flex flex-col bg-white text-brand-dark selection:bg-brand-pink/20 selection:text-brand-pink font-sans">
         {children}
       </body>
     </html>
