@@ -2,6 +2,22 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { SITE_CONFIG } from "@/lib/site-config";
+import {
+  LinkedInIcon,
+  TwitterIcon,
+  GitHubIcon,
+  FacebookIcon,
+  InstagramIcon,
+  GlobeIcon,
+} from "../icons";
+
+const socialIconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
+  LinkedIn: LinkedInIcon,
+  Twitter: TwitterIcon,
+  GitHub: GitHubIcon,
+  Facebook: FacebookIcon,
+  Instagram: InstagramIcon,
+};
 
 export function Footer() {
   return (
@@ -22,18 +38,21 @@ export function Footer() {
             </p>
             {/* Social Icons */}
             <div className="flex items-center gap-3 pt-2">
-              {SITE_CONFIG.socialLinks.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-9 h-9 rounded-full bg-white/10 hover:bg-brand-pink flex items-center justify-center text-xs font-bold text-white transition-all"
-                  aria-label={social.name}
-                >
-                  {social.name.substring(0, 2)}
-                </a>
-              ))}
+              {SITE_CONFIG.socialLinks.map((social) => {
+                const IconComponent = socialIconMap[social.name] || GlobeIcon;
+                return (
+                  <a
+                    key={social.name}
+                    href={social.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-10 h-10 rounded-full bg-white/[0.08] hover:bg-brand-pink border border-white/15 flex items-center justify-center text-white/80 hover:text-white transition-all hover:scale-110 shadow-sm"
+                    aria-label={social.name}
+                  >
+                    <IconComponent size={18} />
+                  </a>
+                );
+              })}
             </div>
           </div>
 
