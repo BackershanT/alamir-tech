@@ -24,7 +24,7 @@ export function PowerfulSoftwareSection() {
   };
 
   return (
-    <section id="products" className="py-24 bg-white relative scroll-mt-20">
+    <section id="products" className="py-24 bg-[#F8FAFC] relative scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3.5 mb-16">

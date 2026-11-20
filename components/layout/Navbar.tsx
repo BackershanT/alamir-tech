@@ -9,7 +9,7 @@ import { SOFTWARE_PRODUCTS } from "@/lib/services-data";
 
 const NAV_ITEMS = [
   { label: "Home", href: "#hero" },
-  { label: "About", href: "#philosophy" },
+  { label: "About", href: "#about" },
   { label: "Services", href: "#services" },
   {
     label: "Products",
@@ -40,7 +40,7 @@ export function Navbar() {
   // Track active section on scroll
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ["hero", "philosophy", "services", "products", "team", "contact"];
+      const sections = ["hero", "about", "services", "products", "team", "contact"];
       const scrollPosition = window.scrollY + 120;
 
       for (const section of sections) {

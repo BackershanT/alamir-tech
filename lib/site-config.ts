@@ -12,7 +12,7 @@ export const SITE_CONFIG = {
   },
   navLinks: [
     { label: "Home", href: "#hero" },
-    { label: "About", href: "#philosophy" },
+    { label: "About", href: "#about" },
     { label: "Services", href: "#services" },
     { label: "Products", href: "#products" },
     { label: "Our Team", href: "#team" },

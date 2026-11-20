@@ -265,6 +265,9 @@
   .inset-0 {
     inset: 0px;
   }
+  .-top-24 {
+    top: calc(var(--spacing) * -24);
+  }
   .top-0 {
     top: 0px;
   }

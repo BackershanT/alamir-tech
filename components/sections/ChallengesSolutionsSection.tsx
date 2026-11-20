@@ -8,7 +8,8 @@ import { PHILOSOPHY_PILLARS, PROCESS_STEPS } from "@/lib/services-data";
 
 export function ChallengesSolutionsSection() {
   return (
-    <section id="philosophy" className="py-24 bg-[#F8FAFC] relative scroll-mt-20">
+    <section id="about" className="py-24 bg-[#F8FAFC] relative scroll-mt-20">
+      <span id="philosophy" className="relative -top-24 block pointer-events-none" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
         {/* Split Section: Image Left, Content Right */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
