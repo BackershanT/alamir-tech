@@ -1,0 +1,96 @@
+name: Dev Continuous Integration & Deployment
+
+on:
+  push:
+    branches:
+      - dev
+
+concurrency:
+  group: dev-deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Lint, Test & Validate (Dev)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Code Formatting & Lint Check
+        run: npm run lint
+
+      - name: Run Unit Tests (if configured)
+        run: npm test --if-present
+
+  build-and-deploy:
+    name: Build & Deploy to Development
+    needs: validate
+    runs-on: ubuntu-latest
+    environment:
+      name: development
+      url: ${{ steps.deploy.outputs.env_url || 'https://dev.alamirtech.com' }}
+    env:
+      NODE_ENV: development
+      APP_ENV: development
+      NEXT_PUBLIC_APP_URL: ${{ vars.NEXT_PUBLIC_APP_URL || 'https://dev.alamirtech.com' }}
+      NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL || 'https://dev-api.alamirtech.com/api' }}
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Next.js Application
+        run: npm run build
+
+      - name: Deploy to Development Environment
+        id: deploy
+        run: |
+          echo "=============================================="
+          echo "Deploying to Development Environment"
+          echo "Target Branch: dev"
+          echo "Commit: ${{ github.sha }}"
+          echo "=============================================="
+          
+          if [ -n "${{ secrets.VERCEL_TOKEN }}" ]; then
+            echo "Deploying via Vercel CLI..."
+            npx vercel --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_ORG_ID }} --yes
+            echo "env_url=https://dev.alamirtech.com" >> $GITHUB_OUTPUT
+          elif [ -n "${{ secrets.DEV_DEPLOY_WEBHOOK }}" ]; then
+            echo "Triggering deployment webhook..."
+            curl -s -X POST "${{ secrets.DEV_DEPLOY_WEBHOOK }}"
+            echo "env_url=https://dev.alamirtech.com" >> $GITHUB_OUTPUT
+          else
+            echo "ℹ️  NOTICE: No deployment secrets (VERCEL_TOKEN or DEV_DEPLOY_WEBHOOK) found in GitHub Environment 'development'."
+            echo "Build and validation succeeded. When deployment credentials are configured, automated deployment will activate."
+            echo "env_url=https://dev.alamirtech.com" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Generate Deployment Summary
+        if: always()
+        run: |
+          echo "### 🚀 Development Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch**: \`dev\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Triggered By**: @${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Environment**: \`development\`" >> $GITHUB_STEP_SUMMARY

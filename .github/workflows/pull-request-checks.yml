@@ -1,0 +1,74 @@
+name: Pull Request Verification
+
+on:
+  pull_request:
+    branches:
+      - dev
+      - beta
+      - master
+
+concurrency:
+  group: pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  pr-checks:
+    name: PR Validation & Verification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Verify PR Branching Architecture
+        run: |
+          TARGET_BRANCH="${{ github.base_ref }}"
+          SOURCE_BRANCH="${{ github.head_ref }}"
+          echo "Validating PR from '$SOURCE_BRANCH' targeting '$TARGET_BRANCH'..."
+
+          # Rules:
+          # 1. master should receive PRs only from beta (or hotfix/*)
+          if [ "$TARGET_BRANCH" = "master" ]; then
+            if [ "$SOURCE_BRANCH" != "beta" ] && [[ ! "$SOURCE_BRANCH" =~ ^hotfix/ ]]; then
+              echo "⚠️ WARNING: Production ('master') typically accepts PRs only from 'beta' (staging) or 'hotfix/*' branches."
+              echo "Found source branch: $SOURCE_BRANCH"
+            else
+              echo "✅ Target branch architecture verified for master."
+            fi
+          fi
+
+          # 2. beta should receive PRs from dev (or release/* or hotfix/*)
+          if [ "$TARGET_BRANCH" = "beta" ]; then
+            if [ "$SOURCE_BRANCH" != "dev" ] && [[ ! "$SOURCE_BRANCH" =~ ^release/ ]] && [[ ! "$SOURCE_BRANCH" =~ ^hotfix/ ]]; then
+              echo "⚠️ WARNING: Staging ('beta') typically accepts PRs from 'dev', 'release/*', or 'hotfix/*' branches."
+              echo "Found source branch: $SOURCE_BRANCH"
+            else
+              echo "✅ Target branch architecture verified for beta."
+            fi
+          fi
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Formatting & Lint Checks
+        run: npm run lint
+
+      - name: Run Automated Tests
+        run: npm test --if-present
+
+      - name: Validate Build
+        run: npm run build
+
+      - name: Post PR Verification Summary
+        if: always()
+        run: |
+          echo "### 🔍 Pull Request Verification Result" >> $GITHUB_STEP_SUMMARY
+          echo "- **PR Number**: #${{ github.event.pull_request.number }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Base Branch**: \`${{ github.base_ref }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Head Branch**: \`${{ github.head_ref }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Lint & Build Status**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
