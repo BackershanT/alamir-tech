@@ -1,7 +1,5 @@
 import React from "react";
 import { WorldMap } from "../graphics/WorldMap";
-import { CeoAvatar } from "../graphics/CeoAvatar";
-import { Button } from "../ui/Button";
 import { GLOBAL_TEAM_STATS } from "@/lib/services-data";
 
 export function ConnectedTeamSection() {
@@ -29,38 +27,9 @@ export function ConnectedTeamSection() {
           </p>
         </div>
 
-        {/* Map & Executive Card Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          {/* World Map: 8 Columns */}
-          <div className="lg:col-span-8">
-            <WorldMap />
-          </div>
-
-          {/* Executive Leadership Card: 4 Columns matching slice_5 */}
-          <div className="lg:col-span-4">
-            <div className="rounded-2xl bg-white/[0.08] border border-white/20 p-6 sm:p-7 backdrop-blur-xl shadow-2xl flex flex-col items-center text-center space-y-4 hover:border-brand-pink/40 transition-colors">
-              <CeoAvatar />
-
-              <div className="space-y-1">
-                <h3 className="text-lg font-bold text-white tracking-wide">
-                  Amir Farooq
-                </h3>
-                <div className="text-xs font-bold text-brand-cyan uppercase tracking-wider">
-                  Founder & CEO
-                </div>
-              </div>
-
-              <p className="text-xs text-brand-border/85 italic leading-relaxed">
-                "We are on a mission to empower businesses with software that doesn't just work—it creates lasting competitive advantage and operational clarity."
-              </p>
-
-              <div className="pt-2 w-full">
-                <Button href="#contact" variant="primary" size="sm" className="w-full">
-                  Meet the Team
-                </Button>
-              </div>
-            </div>
-          </div>
+        {/* Real Geographically Accurate World Map */}
+        <div className="w-full max-w-5xl mx-auto">
+          <WorldMap />
         </div>
 
         {/* Bottom Glassmorphic Stats Strip */}
