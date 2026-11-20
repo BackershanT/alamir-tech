@@ -2,77 +2,93 @@ import React from "react";
 
 export function RocketIllustration() {
   return (
-    <div className="relative w-40 h-40 sm:w-56 sm:h-56 flex items-center justify-center select-none">
+    <div className="relative w-44 h-44 sm:w-60 sm:h-60 flex items-center justify-center select-none">
       <svg
         viewBox="0 0 240 240"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-full drop-shadow-2xl animate-bounce duration-1000"
-        style={{ animationDuration: "3s" }}
+        className="w-full h-full drop-shadow-[0_25px_35px_rgba(0,0,0,0.5)] animate-bounce duration-1000"
+        style={{ animationDuration: "3.5s" }}
       >
         <defs>
-          <linearGradient id="rocketBody" x1="40" y1="40" x2="180" y2="180" gradientUnits="userSpaceOnUse">
+          <linearGradient id="rocketBodyGloss" x1="60" y1="50" x2="160" y2="170" gradientUnits="userSpaceOnUse">
             <stop stopColor="#FFFFFF" />
-            <stop offset="0.6" stopColor="#E2E8F0" />
+            <stop offset="0.5" stopColor="#F1F5F9" />
             <stop offset="1" stopColor="#94A3B8" />
           </linearGradient>
-          <linearGradient id="rocketTip" x1="120" y1="20" x2="200" y2="100" gradientUnits="userSpaceOnUse">
+          <linearGradient id="rocketTipGrad" x1="130" y1="30" x2="195" y2="70" gradientUnits="userSpaceOnUse">
             <stop stopColor="#0599D6" />
             <stop offset="1" stopColor="#091FA8" />
           </linearGradient>
-          <linearGradient id="wingGradient" x1="30" y1="120" x2="100" y2="190" gradientUnits="userSpaceOnUse">
+          <linearGradient id="wingGrad" x1="30" y1="120" x2="100" y2="190" gradientUnits="userSpaceOnUse">
             <stop stopColor="#E60085" />
             <stop offset="1" stopColor="#9D0208" />
           </linearGradient>
           <radialGradient id="portholeGlow" cx="0.5" cy="0.5" r="0.5">
             <stop stopColor="#38BDF8" />
-            <stop offset="1" stopColor="#0284C7" />
+            <stop offset="0.7" stopColor="#0284C7" />
+            <stop offset="1" stopColor="#0369A1" />
           </radialGradient>
-          <radialGradient id="flame" cx="0.5" cy="0.5" r="0.5">
-            <stop stopColor="#FDE047" />
-            <stop offset="0.6" stopColor="#F97316" />
+          <radialGradient id="thrusterFire" cx="0.5" cy="0.5" r="0.5">
+            <stop stopColor="#FEF08A" />
+            <stop offset="0.5" stopColor="#F97316" />
             <stop offset="1" stopColor="#DC2626" />
           </radialGradient>
         </defs>
 
-        {/* Thrust Exhaust Flames */}
+        {/* Thruster Flame Plume */}
         <g className="animate-pulse">
-          <ellipse cx="65" cy="185" rx="20" ry="32" transform="rotate(-45 65 185)" fill="url(#flame)" opacity="0.9" />
-          <ellipse cx="55" cy="195" rx="12" ry="24" transform="rotate(-45 55 195)" fill="#FEF08A" />
+          <ellipse
+            cx="60"
+            cy="188"
+            rx="24"
+            ry="36"
+            transform="rotate(-45 60 188)"
+            fill="url(#thrusterFire)"
+            opacity="0.95"
+          />
+          <ellipse
+            cx="52"
+            cy="196"
+            rx="14"
+            ry="24"
+            transform="rotate(-45 52 196)"
+            fill="#FEF08A"
+          />
         </g>
 
-        {/* Left Fin */}
+        {/* Left Aerodynamic Wing */}
         <path
-          d="M60 130 C45 155 35 180 50 195 C65 210 90 200 115 185 Z"
-          fill="url(#wingGradient)"
+          d="M58 130 C42 155 32 182 48 198 C64 214 90 202 116 186 Z"
+          fill="url(#wingGrad)"
         />
 
-        {/* Right Fin */}
+        {/* Right Aerodynamic Wing */}
         <path
-          d="M130 60 C155 45 180 35 195 50 C210 65 200 90 185 115 Z"
-          fill="url(#wingGradient)"
+          d="M130 58 C155 42 182 32 198 48 C214 64 202 90 186 116 Z"
+          fill="url(#wingGrad)"
         />
 
-        {/* Main Rocket Fuselage */}
+        {/* Main Fuselage */}
         <path
-          d="M80 165 C60 145 65 115 85 90 C110 60 155 40 195 45 C200 85 180 130 150 155 C125 175 95 180 80 165 Z"
-          fill="url(#rocketBody)"
+          d="M78 166 C58 144 64 114 84 88 C108 58 154 38 196 44 C202 86 182 132 152 156 C126 176 96 182 78 166 Z"
+          fill="url(#rocketBodyGloss)"
         />
 
-        {/* Nose Cone Cap */}
+        {/* Cyan Nose Cone */}
         <path
-          d="M165 75 C175 60 185 50 195 45 C190 55 180 65 165 75 Z"
-          fill="url(#rocketTip)"
+          d="M166 74 C176 58 186 48 196 44 C192 54 182 64 166 74 Z"
+          fill="url(#rocketTipGrad)"
         />
 
-        {/* Porthole Outer Ring */}
-        <circle cx="132" cy="108" r="18" fill="#CBD5E1" stroke="#64748B" strokeWidth="2.5" />
-        {/* Porthole Glass */}
-        <circle cx="132" cy="108" r="14" fill="url(#portholeGlow)" />
-        <ellipse cx="128" cy="104" rx="4" ry="2" fill="#FFFFFF" opacity="0.8" transform="rotate(-30 128 104)" />
+        {/* Circular Porthole Window */}
+        <circle cx="134" cy="106" r="20" fill="#CBD5E1" stroke="#475569" strokeWidth="2.5" />
+        <circle cx="134" cy="106" r="15" fill="url(#portholeGlow)" />
+        {/* Specular glass reflection */}
+        <ellipse cx="130" cy="102" rx="5" ry="2.5" fill="#FFFFFF" opacity="0.85" transform="rotate(-35 130 102)" />
 
-        {/* Base Nozzle */}
-        <path d="M72 173 L88 157 L97 166 L81 182 Z" fill="#475569" />
+        {/* Exhaust Engine Rim */}
+        <path d="M70 174 L86 158 L96 168 L80 184 Z" fill="#334155" />
       </svg>
     </div>
   );

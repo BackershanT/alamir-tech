@@ -6,7 +6,7 @@ export function RocketCTASection() {
   return (
     <section className="py-16 bg-white relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl bg-gradient-to-r from-[#091361] via-[#151c72] to-[#0599d6] p-8 sm:p-14 text-white shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="rounded-3xl bg-gradient-to-r from-[#070e3d] via-[#101968] to-[#0599d6] p-8 sm:p-14 text-white shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 border border-white/10">
           {/* Background Ambient Glow */}
           <div className="absolute top-0 right-1/3 w-80 h-80 bg-brand-pink/25 rounded-full blur-[100px] pointer-events-none" />
 

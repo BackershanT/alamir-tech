@@ -2,9 +2,9 @@ import React from "react";
 
 export function TeamIllustration() {
   return (
-    <div className="relative w-full h-full min-h-[320px] rounded-2xl bg-gradient-to-tr from-brand-navy via-brand-blue/90 to-brand-purple p-8 flex flex-col justify-between text-white overflow-hidden shadow-xl border border-brand-border">
-      {/* Background ambient blur */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-brand-cyan/20 rounded-full blur-3xl pointer-events-none" />
+    <div className="relative w-full h-full min-h-[340px] rounded-2xl bg-gradient-to-tr from-[#070e3d] via-[#0d1659] to-[#121c7a] p-8 flex flex-col justify-between text-white overflow-hidden shadow-2xl border border-white/15">
+      {/* Ambient background blur */}
+      <div className="absolute top-0 right-0 w-64 h-64 bg-brand-cyan/25 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-brand-pink/20 rounded-full blur-3xl pointer-events-none" />
 
       {/* Floating Agile Sprint Card */}
@@ -14,7 +14,7 @@ export function TeamIllustration() {
             AT
           </div>
           <div>
-            <div className="text-xs uppercase font-bold tracking-wider text-brand-cyan">
+            <div className="text-xs uppercase font-bold tracking-widest text-brand-cyan">
               Agile Engineering Team
             </div>
             <div className="text-sm font-semibold text-white">Sprint 42: Production Release</div>
@@ -25,13 +25,13 @@ export function TeamIllustration() {
         </span>
       </div>
 
-      {/* Central Visual: Team Collaboration Mockup */}
+      {/* Central Visual: Team Avatars & Active Terminal */}
       <div className="relative z-10 py-6 space-y-4">
         <div className="flex -space-x-3 items-center">
           {[
             { initials: "AF", bg: "bg-brand-pink" },
             { initials: "DV", bg: "bg-brand-cyan text-brand-navy" },
-            { initials: "ER", bg: "bg-purple-500" },
+            { initials: "ER", bg: "bg-purple-600" },
             { initials: "MC", bg: "bg-amber-500" },
             { initials: "+18", bg: "bg-slate-700 text-xs" },
           ].map((avatar, idx) => (
@@ -43,15 +43,15 @@ export function TeamIllustration() {
             </div>
           ))}
           <span className="pl-6 text-xs text-brand-border/90 font-medium">
-            Cross-functional team of architects, researchers & lead engineers
+            Dedicated cross-functional team of architects, researchers & lead engineers
           </span>
         </div>
 
         {/* Live Code Telemetry Terminal */}
-        <div className="rounded-xl bg-[#060B24]/90 p-4 border border-white/10 font-mono text-xs space-y-2 shadow-inner">
+        <div className="rounded-xl bg-[#040826]/95 p-4 border border-white/10 font-mono text-xs space-y-2 shadow-inner">
           <div className="flex items-center justify-between text-white/50 text-[11px]">
             <span>deploy-cluster-v2.1.ts</span>
-            <span className="text-emerald-400">BUILD PASSING</span>
+            <span className="text-emerald-400 font-bold">BUILD PASSING</span>
           </div>
           <div className="text-brand-cyan">
             ✓ 142/142 end-to-end integration tests passed (0.42s)

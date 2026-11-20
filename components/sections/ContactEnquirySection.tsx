@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Button } from "../ui/Button";
+import { Badge } from "../ui/Badge";
 import { WhatsAppIcon, PhoneIcon, MailIcon, MapPinIcon, CheckIcon } from "../icons";
 import { SITE_CONFIG } from "@/lib/site-config";
 
@@ -22,18 +23,18 @@ export function ContactEnquirySection() {
   };
 
   return (
-    <section id="contact" className="py-24 bg-brand-light relative">
+    <section id="contact" className="py-24 bg-[#F8FAFC] relative scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Header Banner */}
-        <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-blue/10 text-brand-blue text-xs font-bold tracking-wider uppercase">
+        <div className="text-center max-w-3xl mx-auto space-y-3.5">
+          <Badge variant="blue" showLines={true}>
             GET IN TOUCH
-          </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-brand-navy tracking-tight">
+          </Badge>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-brand-navy tracking-tight leading-tight">
             Let's build something that <br className="hidden sm:inline" />
             works for your business.
           </h2>
-          <p className="text-sm sm:text-base text-brand-muted max-w-xl mx-auto">
+          <p className="text-sm sm:text-base text-brand-muted max-w-xl mx-auto leading-relaxed">
             Reach out to our engineering directors today and get a customized feasibility study and cost estimate.
           </p>
         </div>
@@ -52,14 +53,14 @@ export function ContactEnquirySection() {
               </p>
             </div>
 
-            {/* Channels */}
-            <div className="space-y-3 pt-1">
+            {/* Channels matching slice_6_contact_enquiry.png */}
+            <div className="space-y-3.5 pt-1">
               {/* WhatsApp */}
               <a
                 href={`https://wa.me/${SITE_CONFIG.contact.whatsapp.replace(/[^0-9]/g, "")}`}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-4 p-4 rounded-xl bg-white border border-brand-border shadow-xs hover:border-emerald-500 hover:shadow-md transition-all group"
+                className="flex items-center gap-4 p-4 rounded-xl bg-white border border-brand-border/80 shadow-xs hover:border-emerald-500 hover:shadow-md transition-all group"
               >
                 <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
                   <WhatsAppIcon size={20} />
@@ -77,7 +78,7 @@ export function ContactEnquirySection() {
               {/* Phone */}
               <a
                 href={`tel:${SITE_CONFIG.contact.phone.replace(/[^0-9+]/g, "")}`}
-                className="flex items-center gap-4 p-4 rounded-xl bg-white border border-brand-border shadow-xs hover:border-brand-blue hover:shadow-md transition-all group"
+                className="flex items-center gap-4 p-4 rounded-xl bg-white border border-brand-border/80 shadow-xs hover:border-brand-blue hover:shadow-md transition-all group"
               >
                 <div className="w-10 h-10 rounded-xl bg-blue-50 text-brand-blue flex items-center justify-center shrink-0">
                   <PhoneIcon size={20} />
@@ -95,7 +96,7 @@ export function ContactEnquirySection() {
               {/* Email */}
               <a
                 href={`mailto:${SITE_CONFIG.contact.email}`}
-                className="flex items-center gap-4 p-4 rounded-xl bg-white border border-brand-border shadow-xs hover:border-brand-cyan hover:shadow-md transition-all group"
+                className="flex items-center gap-4 p-4 rounded-xl bg-white border border-brand-border/80 shadow-xs hover:border-brand-cyan hover:shadow-md transition-all group"
               >
                 <div className="w-10 h-10 rounded-xl bg-cyan-50 text-brand-cyan flex items-center justify-center shrink-0">
                   <MailIcon size={20} />
@@ -111,7 +112,7 @@ export function ContactEnquirySection() {
               </a>
 
               {/* Location */}
-              <div className="flex items-center gap-4 p-4 rounded-xl bg-white border border-brand-border shadow-xs">
+              <div className="flex items-center gap-4 p-4 rounded-xl bg-white border border-brand-border/80 shadow-xs">
                 <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
                   <MapPinIcon size={20} />
                 </div>
@@ -125,9 +126,9 @@ export function ContactEnquirySection() {
             </div>
 
             {/* Dark Urgent Support Box */}
-            <div className="p-6 rounded-2xl bg-brand-navy text-white space-y-3 shadow-md">
+            <div className="p-6 rounded-2xl bg-brand-navy text-white space-y-3.5 shadow-lg border border-white/10">
               <h4 className="text-sm font-bold text-white">Need urgent support?</h4>
-              <p className="text-xs text-brand-border/80">
+              <p className="text-xs text-brand-border/80 leading-relaxed">
                 24/7 dedicated enterprise technical response desk for critical production systems.
               </p>
               <div className="pt-1">
@@ -171,46 +172,54 @@ export function ContactEnquirySection() {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-brand-navy">Full Name *</label>
+                      <label className="text-xs font-bold text-brand-navy uppercase tracking-wider">
+                        Full Name *
+                      </label>
                       <input
                         type="text"
                         required
                         value={formData.fullName}
                         onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                         placeholder="John Doe"
-                        className="w-full px-4 py-2.5 rounded-xl border border-brand-border text-sm focus:outline-none focus:border-brand-blue bg-brand-light"
+                        className="w-full px-4 py-2.5 rounded-xl border border-brand-border text-sm focus:outline-none focus:border-brand-blue bg-[#F8FAFC]"
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-brand-navy">Company Name</label>
+                      <label className="text-xs font-bold text-brand-navy uppercase tracking-wider">
+                        Company Name
+                      </label>
                       <input
                         type="text"
                         value={formData.companyName}
                         onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
                         placeholder="Enterprise Inc."
-                        className="w-full px-4 py-2.5 rounded-xl border border-brand-border text-sm focus:outline-none focus:border-brand-blue bg-brand-light"
+                        className="w-full px-4 py-2.5 rounded-xl border border-brand-border text-sm focus:outline-none focus:border-brand-blue bg-[#F8FAFC]"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-brand-navy">Phone Number *</label>
+                      <label className="text-xs font-bold text-brand-navy uppercase tracking-wider">
+                        Phone Number *
+                      </label>
                       <input
                         type="tel"
                         required
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         placeholder="+1 (555) 000-0000"
-                        className="w-full px-4 py-2.5 rounded-xl border border-brand-border text-sm focus:outline-none focus:border-brand-blue bg-brand-light"
+                        className="w-full px-4 py-2.5 rounded-xl border border-brand-border text-sm focus:outline-none focus:border-brand-blue bg-[#F8FAFC]"
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-brand-navy">Service Needed</label>
+                      <label className="text-xs font-bold text-brand-navy uppercase tracking-wider">
+                        Service Needed
+                      </label>
                       <select
                         value={formData.service}
                         onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                        className="w-full px-4 py-2.5 rounded-xl border border-brand-border text-sm focus:outline-none focus:border-brand-blue bg-brand-light"
+                        className="w-full px-4 py-2.5 rounded-xl border border-brand-border text-sm focus:outline-none focus:border-brand-blue bg-[#F8FAFC]"
                       >
                         <option>Custom Software Development</option>
                         <option>Cloud Infrastructure & DevOps</option>
@@ -223,11 +232,13 @@ export function ContactEnquirySection() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-brand-navy">Target Budget</label>
+                    <label className="text-xs font-bold text-brand-navy uppercase tracking-wider">
+                      Target Budget
+                    </label>
                     <select
                       value={formData.budget}
                       onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-xl border border-brand-border text-sm focus:outline-none focus:border-brand-blue bg-brand-light"
+                      className="w-full px-4 py-2.5 rounded-xl border border-brand-border text-sm focus:outline-none focus:border-brand-blue bg-[#F8FAFC]"
                     >
                       <option>&lt; $25,000</option>
                       <option>$25,000 - $50,000</option>
@@ -237,14 +248,16 @@ export function ContactEnquirySection() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-brand-navy">Tell us about your project *</label>
+                    <label className="text-xs font-bold text-brand-navy uppercase tracking-wider">
+                      Tell us about your project *
+                    </label>
                     <textarea
                       required
                       rows={3}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder="Objectives, requirements, timelines..."
-                      className="w-full px-4 py-2.5 rounded-xl border border-brand-border text-sm focus:outline-none focus:border-brand-blue bg-brand-light resize-none"
+                      className="w-full px-4 py-2.5 rounded-xl border border-brand-border text-sm focus:outline-none focus:border-brand-blue bg-[#F8FAFC] resize-none"
                     />
                   </div>
 

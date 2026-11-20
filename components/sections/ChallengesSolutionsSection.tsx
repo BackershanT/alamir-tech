@@ -8,7 +8,7 @@ import { PHILOSOPHY_PILLARS, PROCESS_STEPS } from "@/lib/services-data";
 
 export function ChallengesSolutionsSection() {
   return (
-    <section id="philosophy" className="py-24 bg-white relative">
+    <section id="philosophy" className="py-24 bg-[#F8FAFC] relative scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
         {/* Split Section: Image Left, Content Right */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -19,9 +19,11 @@ export function ChallengesSolutionsSection() {
 
           {/* Right Column: Copy & Bullet Points */}
           <div className="lg:col-span-6 space-y-6">
-            <Badge variant="blue">OUR PHILOSOPHY</Badge>
+            <Badge variant="blue" showLines={true}>
+              OUR PHILOSOPHY
+            </Badge>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-brand-navy tracking-tight leading-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-brand-navy tracking-tight leading-[1.15]">
               We turn business <br />
               challenges into practical <br />
               software solutions.
@@ -31,51 +33,51 @@ export function ChallengesSolutionsSection() {
               We believe technology should serve your strategic vision, not complicate it. Our cross-functional agile teams work hand-in-hand with your executive stakeholders to deliver reliable, scalable results.
             </p>
 
-            {/* 3 Pillars */}
+            {/* 3 Pillars matching mockup */}
             <div className="space-y-4 pt-2">
               {PHILOSOPHY_PILLARS.map((pillar, idx) => (
                 <div key={idx} className="flex items-start gap-3.5">
                   <div
                     className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
                       pillar.color === "cyan"
-                        ? "bg-brand-cyan/15 text-brand-cyan"
+                        ? "bg-[#E0F2FE] text-[#0284C7]"
                         : pillar.color === "pink"
-                        ? "bg-brand-pink/15 text-brand-pink"
-                        : "bg-brand-purple/15 text-brand-purple"
+                        ? "bg-[#FCE7F3] text-[#BE185D]"
+                        : "bg-[#F3E8FF] text-[#7E22CE]"
                     }`}
                   >
                     <CheckIcon size={14} />
                   </div>
                   <div>
                     <h4 className="text-sm font-bold text-brand-navy">{pillar.title}</h4>
-                    <p className="text-xs text-brand-muted">{pillar.desc}</p>
+                    <p className="text-xs text-brand-muted mt-0.5">{pillar.desc}</p>
                   </div>
                 </div>
               ))}
             </div>
 
             {/* CTAs */}
-            <div className="pt-4 flex flex-wrap items-center gap-4">
+            <div className="pt-4 flex flex-wrap items-center gap-5">
               <Button href="#contact" size="md">
                 Speak to a Specialist
               </Button>
               <Link
                 href="#services"
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-navy hover:text-brand-pink transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-navy hover:text-brand-pink transition-colors group"
               >
                 <span>See client stories</span>
-                <ArrowRight size={14} />
+                <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
           </div>
         </div>
 
-        {/* 3 Bottom Cards: Understand, Connect, Scale */}
+        {/* 3 Bottom Process Cards: Understand, Connect, Scale */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
           {PROCESS_STEPS.map((step, idx) => (
             <div
               key={idx}
-              className={`p-6 sm:p-7 rounded-2xl border ${step.border} ${step.bg} space-y-3 transition-transform hover:-translate-y-1 duration-200`}
+              className={`p-7 rounded-2xl border ${step.border} ${step.bg} space-y-3 transition-all hover:-translate-y-1 hover:shadow-md duration-200`}
             >
               <div className="flex items-center gap-2">
                 <span className={`text-base font-extrabold ${step.textColor}`}>
@@ -83,7 +85,7 @@ export function ChallengesSolutionsSection() {
                 </span>
                 <h4 className={`text-lg font-bold ${step.textColor}`}>{step.title}</h4>
               </div>
-              <p className="text-xs sm:text-sm text-brand-dark/80 leading-relaxed font-normal">
+              <p className="text-xs sm:text-sm text-brand-dark/85 leading-relaxed font-normal">
                 {step.desc}
               </p>
             </div>

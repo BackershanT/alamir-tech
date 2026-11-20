@@ -8,23 +8,23 @@ export function ConnectedTeamSection() {
   return (
     <section
       id="team"
-      className="py-24 bg-gradient-to-r from-[#070e3d] via-[#101968] to-[#070e3d] text-white relative overflow-hidden"
+      className="py-24 bg-gradient-to-r from-[#060b2b] via-[#0d1659] to-[#070e3d] text-white relative overflow-hidden scroll-mt-20"
     >
-      {/* Background ambient mesh */}
-      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-brand-cyan/20 rounded-full blur-[140px] pointer-events-none" />
+      {/* Background ambient glow matching slice_5_connected_team_map.png */}
+      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-brand-cyan/25 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute bottom-0 -right-32 w-96 h-96 bg-brand-pink/20 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 space-y-14">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-brand-cyan text-xs font-bold tracking-wider uppercase border border-white/10">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-brand-cyan text-xs font-bold tracking-widest uppercase border border-white/10">
             GLOBAL EXPERTISE & PRESENCE
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
             A connected team, building <br className="hidden sm:inline" />
             smarter solutions.
           </h2>
-          <p className="text-sm sm:text-base text-brand-border/80 max-w-xl mx-auto">
+          <p className="text-sm sm:text-base text-brand-border/80 max-w-xl mx-auto leading-relaxed">
             From our hubs in the Americas, Europe, and Middle East, our distributed engineering teams deliver round-the-clock innovation.
           </p>
         </div>
@@ -36,22 +36,22 @@ export function ConnectedTeamSection() {
             <WorldMap />
           </div>
 
-          {/* Executive Leadership Card: 4 Columns */}
+          {/* Executive Leadership Card: 4 Columns matching slice_5 */}
           <div className="lg:col-span-4">
-            <div className="rounded-2xl bg-white/10 border border-white/15 p-6 sm:p-7 backdrop-blur-xl shadow-2xl flex flex-col items-center text-center space-y-4">
+            <div className="rounded-2xl bg-white/[0.08] border border-white/20 p-6 sm:p-7 backdrop-blur-xl shadow-2xl flex flex-col items-center text-center space-y-4 hover:border-brand-pink/40 transition-colors">
               <CeoAvatar />
 
               <div className="space-y-1">
                 <h3 className="text-lg font-bold text-white tracking-wide">
                   Amir Farooq
                 </h3>
-                <div className="text-xs font-semibold text-brand-cyan uppercase tracking-wider">
+                <div className="text-xs font-bold text-brand-cyan uppercase tracking-wider">
                   Founder & CEO
                 </div>
               </div>
 
-              <p className="text-xs text-brand-border/80 italic leading-relaxed">
-                "We are on a mission to empower businesses with software that doesn't just work—it creates lasting competitive advantage and clarity."
+              <p className="text-xs text-brand-border/85 italic leading-relaxed">
+                "We are on a mission to empower businesses with software that doesn't just work—it creates lasting competitive advantage and operational clarity."
               </p>
 
               <div className="pt-2 w-full">
@@ -64,8 +64,8 @@ export function ConnectedTeamSection() {
         </div>
 
         {/* Bottom Glassmorphic Stats Strip */}
-        <div className="rounded-2xl bg-white/5 border border-white/10 p-5 backdrop-blur-md">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 text-center divide-y sm:divide-y-0 sm:divide-x divide-white/10">
+        <div className="rounded-2xl bg-white/[0.07] border border-white/15 p-5 backdrop-blur-md shadow-lg">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 text-center divide-y sm:divide-y-0 sm:divide-x divide-white/15">
             {GLOBAL_TEAM_STATS.map((stat, idx) => (
               <div key={idx} className="pt-3 sm:pt-0 sm:px-3 first:pt-0">
                 <div className="text-sm sm:text-base font-bold text-white tracking-wide">

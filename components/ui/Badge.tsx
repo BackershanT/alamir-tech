@@ -3,23 +3,37 @@ import React from "react";
 interface BadgeProps {
   children: React.ReactNode;
   variant?: "cyan" | "pink" | "purple" | "blue" | "navy";
+  showLines?: boolean;
   className?: string;
 }
 
-export function Badge({ children, variant = "blue", className = "" }: BadgeProps) {
-  const variantStyles = {
-    cyan: "bg-brand-cyan/10 text-brand-cyan border-brand-cyan/20",
-    pink: "bg-brand-pink/10 text-brand-pink border-brand-pink/20",
-    purple: "bg-brand-purple/10 text-brand-purple border-brand-purple/20",
-    blue: "bg-brand-blue/10 text-brand-blue border-brand-blue/20",
-    navy: "bg-brand-navy/10 text-brand-navy border-brand-navy/20",
+export function Badge({
+  children,
+  variant = "blue",
+  showLines = true,
+  className = "",
+}: BadgeProps) {
+  const lineColors = {
+    cyan: "bg-brand-cyan/60",
+    pink: "bg-brand-pink/60",
+    purple: "bg-brand-purple/60",
+    blue: "bg-brand-blue/60",
+    navy: "bg-brand-navy/40",
+  }[variant];
+
+  const textColors = {
+    cyan: "text-brand-cyan",
+    pink: "text-brand-pink",
+    purple: "text-brand-purple",
+    blue: "text-brand-blue",
+    navy: "text-brand-navy",
   }[variant];
 
   return (
-    <span
-      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border ${variantStyles} ${className}`}
-    >
-      {children}
-    </span>
+    <div className={`inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest ${className}`}>
+      {showLines && <span className={`w-5 h-[1.5px] rounded-full ${lineColors}`} />}
+      <span className={textColors}>{children}</span>
+      {showLines && <span className={`w-5 h-[1.5px] rounded-full ${lineColors}`} />}
+    </div>
   );
 }
