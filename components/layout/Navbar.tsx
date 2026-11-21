@@ -25,7 +25,12 @@ export function Navbar() {
   const [productsOpen, setProductsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
+
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const hideTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const lastScrollYRef = useRef<number>(0);
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -38,14 +43,19 @@ export function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Track active section and scroll state
+  // Track scroll direction, active section, and auto-hide/reveal rules
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      const currentScrollY = window.scrollY;
+      const heroEl = document.getElementById("hero");
+      const heroBottom = heroEl ? heroEl.offsetHeight - 80 : 600;
+      const isAtHome = currentScrollY <= heroBottom;
 
+      setIsScrolled(currentScrollY > 20);
+
+      // 1. Scrollspy: track active section
       const sections = ["hero", "about", "services", "products", "team", "contact"];
-      const scrollPosition = window.scrollY + 120;
-
+      const scrollPosition = currentScrollY + 120;
       for (const section of sections) {
         const el = document.getElementById(section);
         if (el) {
@@ -57,12 +67,74 @@ export function Navbar() {
           }
         }
       }
+
+      // 2. Visibility rule:
+      // In Home: always show navbar.
+      // Other screens: hide it. When scrolling upward: show navbar, then hide after 3 seconds.
+      if (isAtHome) {
+        setIsVisible(true);
+        if (hideTimerRef.current) {
+          clearTimeout(hideTimerRef.current);
+          hideTimerRef.current = null;
+        }
+      } else {
+        const deltaY = currentScrollY - lastScrollYRef.current;
+
+        if (deltaY > 6) {
+          // Scrolling DOWN on other screens -> hide immediately
+          setIsVisible(false);
+          if (hideTimerRef.current) {
+            clearTimeout(hideTimerRef.current);
+            hideTimerRef.current = null;
+          }
+        } else if (deltaY < -6) {
+          // Scrolling UP on other screens -> show navbar, then auto-hide after 3 seconds
+          setIsVisible(true);
+          if (hideTimerRef.current) {
+            clearTimeout(hideTimerRef.current);
+          }
+          hideTimerRef.current = setTimeout(() => {
+            setIsVisible(false);
+          }, 3000);
+        }
+      }
+
+      lastScrollYRef.current = currentScrollY;
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+    };
   }, []);
+
+  // Pause hide timer on hover so navbar doesn't disappear during user interaction
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    if (hideTimerRef.current) {
+      clearTimeout(hideTimerRef.current);
+      hideTimerRef.current = null;
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    const heroEl = document.getElementById("hero");
+    const heroBottom = heroEl ? heroEl.offsetHeight - 80 : 600;
+    const isPastHome = window.scrollY > heroBottom;
+
+    if (isPastHome && !productsOpen && !mobileMenuOpen) {
+      if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+      hideTimerRef.current = setTimeout(() => {
+        setIsVisible(false);
+      }, 3000);
+    }
+  };
+
+  // Keep navbar visible if currently active or hovered
+  const shouldShow = isVisible || productsOpen || mobileMenuOpen || isHovered;
 
   const productIcons = {
     erp: { icon: ZapIcon, color: "text-brand-cyan bg-[#E0F2FE]" },
@@ -72,7 +144,13 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
+        shouldShow
+          ? "translate-y-0 opacity-100 pointer-events-auto"
+          : "-translate-y-full opacity-0 pointer-events-none"
+      } ${
         isScrolled
           ? "bg-[#060c33]/85 backdrop-blur-xl border-b border-white/15 shadow-[0_4px_30px_rgba(0,0,0,0.3)]"
           : "bg-transparent border-b border-white/10"
@@ -80,7 +158,7 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* 1. Left Zone: Brand Logo (White version for transparent dark backdrop) */}
+          {/* 1. Left Zone: Brand Logo */}
           <Link href="/" className="flex items-center gap-2 group shrink-0">
             <Image
               src="/images/logo-white-trimmed.png"
