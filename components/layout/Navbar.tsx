@@ -24,6 +24,7 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
+  const [isAtHome, setIsAtHome] = useState(true);
   const [isVisible, setIsVisible] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -48,7 +49,8 @@ export function Navbar() {
       const currentScrollY = window.scrollY;
       const heroEl = document.getElementById("hero");
       const heroBottom = heroEl ? heroEl.offsetHeight - 80 : 600;
-      const isAtHome = currentScrollY <= heroBottom;
+      const currentIsAtHome = currentScrollY <= heroBottom;
+      setIsAtHome(currentIsAtHome);
 
       // 1. Scrollspy: track active section
       const sections = ["hero", "about", "services", "products", "team", "contact"];
@@ -68,7 +70,7 @@ export function Navbar() {
       // 2. Visibility rule:
       // In Home: always show navbar.
       // Other screens: hide it. When scrolling upward: show navbar, then hide after 3 seconds.
-      if (isAtHome) {
+      if (currentIsAtHome) {
         setIsVisible(true);
         if (hideTimerRef.current) {
           clearTimeout(hideTimerRef.current);
@@ -143,10 +145,14 @@ export function Navbar() {
     <header
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out bg-transparent ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
         shouldShow
           ? "translate-y-0 opacity-100 pointer-events-auto"
           : "-translate-y-full opacity-0 pointer-events-none"
+      } ${
+        isAtHome
+          ? "bg-transparent border-b border-transparent"
+          : "bg-white/95 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.06)] border-b border-slate-100"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -182,22 +188,36 @@ export function Navbar() {
                       onClick={() => setProductsOpen(!productsOpen)}
                       className={`flex items-center gap-1.5 text-sm font-semibold tracking-wide transition-colors py-2 cursor-pointer ${
                         isActive || productsOpen
-                          ? "text-brand-cyan font-bold"
-                          : "text-white/85 hover:text-white"
+                          ? isAtHome
+                            ? "text-brand-cyan font-bold"
+                            : "text-brand-pink font-bold"
+                          : isAtHome
+                          ? "text-white/85 hover:text-white"
+                          : "text-slate-700 hover:text-brand-pink"
                       }`}
                     >
                       <span>{item.label}</span>
                       <ChevronDown
                         size={14}
                         className={`transition-transform duration-200 ${
-                          productsOpen ? "rotate-180 text-brand-pink" : "text-white/60"
+                          productsOpen
+                            ? "rotate-180 text-brand-pink"
+                            : isAtHome
+                            ? "text-white/60"
+                            : "text-slate-500"
                         }`}
                       />
                     </button>
 
                     {/* Dropdown Popover */}
                     {productsOpen && (
-                      <div className="absolute top-full left-1/2 -translate-x-1/2 w-80 bg-[#070e38]/95 backdrop-blur-2xl rounded-2xl border border-white/15 shadow-2xl p-3 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
+                      <div
+                        className={`absolute top-full left-1/2 -translate-x-1/2 w-80 rounded-2xl p-3 animate-in fade-in slide-in-from-top-2 duration-150 z-50 backdrop-blur-2xl shadow-2xl border ${
+                          isAtHome
+                            ? "bg-[#070e38]/95 border-white/15 text-white"
+                            : "bg-white border-slate-200 text-slate-900 shadow-[0_10px_35px_rgba(0,0,0,0.1)]"
+                        }`}
+                      >
                         <div className="space-y-1">
                           {SOFTWARE_PRODUCTS.map((prod) => {
                             const iconData = productIcons[prod.iconType];
@@ -208,7 +228,11 @@ export function Navbar() {
                                 key={prod.title}
                                 href={prod.href}
                                 onClick={() => setProductsOpen(false)}
-                                className="flex items-start gap-3.5 p-3 rounded-xl hover:bg-white/[0.08] transition-colors group"
+                                className={`flex items-start gap-3.5 p-3 rounded-xl transition-colors group ${
+                                  isAtHome
+                                    ? "hover:bg-white/[0.08]"
+                                    : "hover:bg-slate-100/80"
+                                }`}
                               >
                                 <div
                                   className={`w-9 h-9 rounded-lg ${iconData.color} flex items-center justify-center shrink-0 mt-0.5`}
@@ -216,11 +240,21 @@ export function Navbar() {
                                   <Icon size={18} />
                                 </div>
                                 <div className="space-y-0.5">
-                                  <div className="text-xs font-bold text-white group-hover:text-brand-cyan transition-colors flex items-center gap-1">
+                                  <div
+                                    className={`text-xs font-bold transition-colors flex items-center gap-1 ${
+                                      isAtHome
+                                        ? "text-white group-hover:text-brand-cyan"
+                                        : "text-slate-900 group-hover:text-brand-pink"
+                                    }`}
+                                  >
                                     <span>{prod.title}</span>
                                     <ArrowRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-brand-pink" />
                                   </div>
-                                  <div className="text-[11px] text-brand-border/70 line-clamp-1">
+                                  <div
+                                    className={`text-[11px] line-clamp-1 ${
+                                      isAtHome ? "text-brand-border/70" : "text-slate-500"
+                                    }`}
+                                  >
                                     {prod.description}
                                   </div>
                                 </div>
@@ -228,7 +262,13 @@ export function Navbar() {
                             );
                           })}
                         </div>
-                        <div className="mt-2 pt-2 border-t border-white/10 px-3 py-1 flex items-center justify-between text-[11px] text-brand-border/70">
+                        <div
+                          className={`mt-2 pt-2 px-3 py-1 flex items-center justify-between text-[11px] border-t ${
+                            isAtHome
+                              ? "border-white/10 text-brand-border/70"
+                              : "border-slate-100 text-slate-500"
+                          }`}
+                        >
                           <span>Custom SaaS platforms</span>
                           <Link
                             href="#contact"
@@ -250,8 +290,12 @@ export function Navbar() {
                   href={item.href}
                   className={`text-sm font-semibold tracking-wide transition-colors py-2 ${
                     isActive
-                      ? "text-brand-cyan font-bold"
-                      : "text-white/85 hover:text-white"
+                      ? isAtHome
+                        ? "text-brand-cyan font-bold"
+                        : "text-brand-pink font-bold"
+                      : isAtHome
+                      ? "text-white/85 hover:text-white"
+                      : "text-slate-700 hover:text-brand-pink"
                   }`}
                 >
                   {item.label}
@@ -271,7 +315,11 @@ export function Navbar() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-white rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
+            className={`md:hidden p-2 rounded-lg transition-colors cursor-pointer ${
+              isAtHome
+                ? "text-white hover:bg-white/10"
+                : "text-slate-800 hover:bg-slate-100"
+            }`}
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <CloseIcon size={24} /> : <MenuIcon size={24} />}
@@ -281,14 +329,24 @@ export function Navbar() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#070e38]/98 backdrop-blur-2xl border-b border-white/15 px-6 pt-4 pb-8 space-y-4 shadow-2xl animate-in slide-in-from-top-2 duration-200">
+        <div
+          className={`md:hidden backdrop-blur-2xl px-6 pt-4 pb-8 space-y-4 shadow-2xl animate-in slide-in-from-top-2 duration-200 border-b ${
+            isAtHome
+              ? "bg-[#070e38]/98 border-white/15"
+              : "bg-white/98 border-slate-200 shadow-[0_12px_30px_rgba(0,0,0,0.08)]"
+          }`}
+        >
           <div className="flex flex-col space-y-2">
             {NAV_ITEMS.map((item) => (
               <div key={item.label}>
                 <Link
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block text-base font-semibold text-white/90 hover:text-brand-pink py-2.5 border-b border-white/10 transition-colors"
+                  className={`block text-base font-semibold py-2.5 border-b transition-colors ${
+                    isAtHome
+                      ? "text-white/90 hover:text-brand-pink border-white/10"
+                      : "text-slate-800 hover:text-brand-pink border-slate-100"
+                  }`}
                 >
                   {item.label}
                 </Link>
