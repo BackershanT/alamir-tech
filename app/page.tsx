@@ -7,7 +7,6 @@ import { ChallengesSolutionsSection } from "@/components/sections/ChallengesSolu
 import { ConnectedTeamSection } from "@/components/sections/ConnectedTeamSection";
 import { ContactEnquirySection } from "@/components/sections/ContactEnquirySection";
 import { FAQSection } from "@/components/sections/FAQSection";
-import { RocketCTASection } from "@/components/sections/RocketCTASection";
 
 export default function Home() {
   return (
@@ -38,8 +37,6 @@ export default function Home() {
         {/* 7. FAQ Section: Question, answered */}
         <FAQSection />
 
-        {/* 8. Rocket CTA Section: Ready to make your business work smarter? */}
-        <RocketCTASection />
       </main>
 
       {/* 10. Footer */}
