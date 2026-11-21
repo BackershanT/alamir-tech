@@ -161,10 +161,10 @@ export function Navbar() {
           {/* 1. Left Zone: Brand Logo */}
           <Link href="/" className="flex items-center gap-2 group shrink-0">
             <Image
-              src="/images/logo-white-trimmed.png"
+              src="/images/logo-dark.png"
               alt="Alamir Tech"
-              width={190}
-              height={51}
+              width={183}
+              height={50}
               priority
               className="h-10 sm:h-11 w-auto object-contain object-left transition-transform duration-200 group-hover:scale-[1.02]"
             />
