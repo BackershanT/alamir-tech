@@ -7,7 +7,7 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-[92vh] bg-gradient-to-r from-[#070e3d] via-[#0d1659] to-[#091fa8] text-white flex flex-col justify-center overflow-hidden pt-16 pb-24 sm:pb-32"
+      className="relative min-h-screen bg-gradient-to-r from-[#070e3d] via-[#0d1659] to-[#091fa8] text-white flex flex-col justify-center overflow-hidden pt-28 sm:pt-36 pb-24 sm:pb-32"
     >
       {/* Rich ambient radial mesh matching slice_1_hero.png */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-brand-purple/40 to-brand-pink/20 rounded-full blur-[140px] pointer-events-none" />

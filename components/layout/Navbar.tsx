@@ -24,6 +24,7 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
+  const [isScrolled, setIsScrolled] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Close dropdown on outside click
@@ -37,9 +38,11 @@ export function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Track active section on scroll
+  // Track active section and scroll state
   useEffect(() => {
     const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+
       const sections = ["hero", "about", "services", "products", "team", "contact"];
       const scrollPosition = window.scrollY + 120;
 
@@ -57,6 +60,7 @@ export function Navbar() {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -67,13 +71,19 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 left-0 right-0 z-50 bg-white/98 backdrop-blur-md border-b border-brand-border/80 shadow-[0_2px_10px_rgba(0,0,0,0.03)] transition-all">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-[#060c33]/85 backdrop-blur-xl border-b border-white/15 shadow-[0_4px_30px_rgba(0,0,0,0.3)]"
+          : "bg-transparent border-b border-white/10"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* 1. Left Zone: Brand Logo */}
+          {/* 1. Left Zone: Brand Logo (White version for transparent dark backdrop) */}
           <Link href="/" className="flex items-center gap-2 group shrink-0">
             <Image
-              src="/images/logo-color-trimmed.png"
+              src="/images/logo-white-trimmed.png"
               alt="Alamir Tech"
               width={190}
               height={51}
@@ -101,22 +111,22 @@ export function Navbar() {
                       onClick={() => setProductsOpen(!productsOpen)}
                       className={`flex items-center gap-1.5 text-sm font-semibold tracking-wide transition-colors py-2 cursor-pointer ${
                         isActive || productsOpen
-                          ? "text-brand-blue"
-                          : "text-brand-dark hover:text-brand-blue"
+                          ? "text-brand-cyan font-bold"
+                          : "text-white/85 hover:text-white"
                       }`}
                     >
                       <span>{item.label}</span>
                       <ChevronDown
                         size={14}
                         className={`transition-transform duration-200 ${
-                          productsOpen ? "rotate-180 text-brand-pink" : "text-brand-muted"
+                          productsOpen ? "rotate-180 text-brand-pink" : "text-white/60"
                         }`}
                       />
                     </button>
 
                     {/* Dropdown Popover */}
                     {productsOpen && (
-                      <div className="absolute top-full left-1/2 -translate-x-1/2 w-80 bg-white rounded-2xl border border-brand-border shadow-2xl p-3 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 w-80 bg-[#070e38]/95 backdrop-blur-2xl rounded-2xl border border-white/15 shadow-2xl p-3 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
                         <div className="space-y-1">
                           {SOFTWARE_PRODUCTS.map((prod) => {
                             const iconData = productIcons[prod.iconType];
@@ -127,7 +137,7 @@ export function Navbar() {
                                 key={prod.title}
                                 href={prod.href}
                                 onClick={() => setProductsOpen(false)}
-                                className="flex items-start gap-3.5 p-3 rounded-xl hover:bg-brand-light transition-colors group"
+                                className="flex items-start gap-3.5 p-3 rounded-xl hover:bg-white/[0.08] transition-colors group"
                               >
                                 <div
                                   className={`w-9 h-9 rounded-lg ${iconData.color} flex items-center justify-center shrink-0 mt-0.5`}
@@ -135,11 +145,11 @@ export function Navbar() {
                                   <Icon size={18} />
                                 </div>
                                 <div className="space-y-0.5">
-                                  <div className="text-xs font-bold text-brand-navy group-hover:text-brand-blue transition-colors flex items-center gap-1">
+                                  <div className="text-xs font-bold text-white group-hover:text-brand-cyan transition-colors flex items-center gap-1">
                                     <span>{prod.title}</span>
                                     <ArrowRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-brand-pink" />
                                   </div>
-                                  <div className="text-[11px] text-brand-muted line-clamp-1">
+                                  <div className="text-[11px] text-brand-border/70 line-clamp-1">
                                     {prod.description}
                                   </div>
                                 </div>
@@ -147,12 +157,12 @@ export function Navbar() {
                             );
                           })}
                         </div>
-                        <div className="mt-2 pt-2 border-t border-brand-border/60 px-3 py-1 flex items-center justify-between text-[11px] text-brand-muted">
+                        <div className="mt-2 pt-2 border-t border-white/10 px-3 py-1 flex items-center justify-between text-[11px] text-brand-border/70">
                           <span>Custom SaaS platforms</span>
                           <Link
                             href="#contact"
                             onClick={() => setProductsOpen(false)}
-                            className="font-bold text-brand-blue hover:text-brand-pink"
+                            className="font-bold text-brand-cyan hover:text-brand-pink transition-colors"
                           >
                             Request Demo →
                           </Link>
@@ -169,8 +179,8 @@ export function Navbar() {
                   href={item.href}
                   className={`text-sm font-semibold tracking-wide transition-colors py-2 ${
                     isActive
-                      ? "text-brand-blue font-bold"
-                      : "text-brand-dark hover:text-brand-blue"
+                      ? "text-brand-cyan font-bold"
+                      : "text-white/85 hover:text-white"
                   }`}
                 >
                   {item.label}
@@ -190,7 +200,7 @@ export function Navbar() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-brand-navy rounded-lg hover:bg-brand-light transition-colors cursor-pointer"
+            className="md:hidden p-2 text-white rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <CloseIcon size={24} /> : <MenuIcon size={24} />}
@@ -200,14 +210,14 @@ export function Navbar() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-b border-brand-border px-6 pt-4 pb-8 space-y-4 shadow-xl animate-in slide-in-from-top-2 duration-200">
+        <div className="md:hidden bg-[#070e38]/98 backdrop-blur-2xl border-b border-white/15 px-6 pt-4 pb-8 space-y-4 shadow-2xl animate-in slide-in-from-top-2 duration-200">
           <div className="flex flex-col space-y-2">
             {NAV_ITEMS.map((item) => (
               <div key={item.label}>
                 <Link
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block text-base font-semibold text-brand-dark hover:text-brand-pink py-2.5 border-b border-brand-border/40 transition-colors"
+                  className="block text-base font-semibold text-white/90 hover:text-brand-pink py-2.5 border-b border-white/10 transition-colors"
                 >
                   {item.label}
                 </Link>
