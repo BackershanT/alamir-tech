@@ -939,9 +939,6 @@
   .border-t-white {
     border-top-color: var(--color-white);
   }
-  .bg-\[\#060c33\]\/85 {
-    background-color: color-mix(in oklab, #060c33 85%, transparent);
-  }
   .bg-\[\#060e33\]\/90 {
     background-color: color-mix(in oklab, #060e33 90%, transparent);
   }
@@ -1600,10 +1597,6 @@
   }
   .shadow-\[0_0_15px_\#E60085\] {
     --tw-shadow: 0 0 15px var(--tw-shadow-color, #E60085);
-    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-  }
-  .shadow-\[0_4px_30px_rgba\(0\,0\,0\,0\.3\)\] {
-    --tw-shadow: 0 4px 30px var(--tw-shadow-color, rgba(0,0,0,0.3));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
   .shadow-\[0_10px_35px_rgba\(5\,153\,214\,0\.3\)\] {

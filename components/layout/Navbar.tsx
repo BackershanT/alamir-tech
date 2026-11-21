@@ -24,7 +24,6 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -50,8 +49,6 @@ export function Navbar() {
       const heroEl = document.getElementById("hero");
       const heroBottom = heroEl ? heroEl.offsetHeight - 80 : 600;
       const isAtHome = currentScrollY <= heroBottom;
-
-      setIsScrolled(currentScrollY > 20);
 
       // 1. Scrollspy: track active section
       const sections = ["hero", "about", "services", "products", "team", "contact"];
@@ -146,14 +143,10 @@ export function Navbar() {
     <header
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out bg-transparent ${
         shouldShow
           ? "translate-y-0 opacity-100 pointer-events-auto"
           : "-translate-y-full opacity-0 pointer-events-none"
-      } ${
-        isScrolled
-          ? "bg-[#060c33]/85 backdrop-blur-xl border-b border-white/15 shadow-[0_4px_30px_rgba(0,0,0,0.3)]"
-          : "bg-transparent border-b border-white/10"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
